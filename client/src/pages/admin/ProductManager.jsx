@@ -92,6 +92,8 @@ const ProductManager = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (isSubmitting) return; // Bloqueo de seguridad absoluto
+
     if (!name || !description || !price || !stock) {
       toast.error('Por favor completa todos los campos requeridos');
       return;

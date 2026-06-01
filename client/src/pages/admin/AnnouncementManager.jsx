@@ -92,6 +92,8 @@ const AnnouncementManager = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (isSubmitting) return; // Bloqueo de seguridad absoluto
+
     if (!title) {
       toast.error('Por favor ingresa un título de anuncio');
       return;
