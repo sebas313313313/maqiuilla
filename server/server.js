@@ -31,7 +31,8 @@ app.use(helmet({
 const allowedOrigins = [
   'http://localhost:5173',       // Vite dev server
   'http://127.0.0.1:5173',      // Vite dev server (alt)
-  process.env.CLIENT_URL,        // URL de producción del frontend
+  'https://lirio-store.vercel.app', // Vercel production URL
+  process.env.CLIENT_URL,        // Custom production URL
 ].filter(Boolean);
 
 app.use(cors({
