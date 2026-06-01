@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Plus, Pencil, Trash2, Eye, Check, X, Star, Upload } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -9,6 +9,7 @@ const ProductManager = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const isSubmittingRef = useRef(false);
 
   // Form Fields
   const [name, setName] = useState('');
@@ -92,13 +93,14 @@ const ProductManager = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (isSubmitting) return; // Bloqueo de seguridad absoluto
+    if (isSubmittingRef.current) return;
 
     if (!name || !description || !price || !stock) {
       toast.error('Por favor completa todos los campos requeridos');
       return;
     }
 
+    isSubmittingRef.current = true;
     setIsSubmitting(true);
 
     const formData = new FormData();
@@ -132,6 +134,7 @@ const ProductManager = () => {
       console.error('Error saving product:', error);
       toast.error(error.response?.data?.message || 'Error al guardar producto');
     } finally {
+      isSubmittingRef.current = false;
       setIsSubmitting(false);
     }
   };

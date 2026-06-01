@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Plus, Pencil, Trash2, Bell, X, Check, Upload, ToggleLeft, ToggleRight } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -9,6 +9,7 @@ const AnnouncementManager = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingAnnouncement, setEditingAnnouncement] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const isSubmittingRef = useRef(false);
 
   // Form Fields
   const [title, setTitle] = useState('');
@@ -92,13 +93,14 @@ const AnnouncementManager = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (isSubmitting) return; // Bloqueo de seguridad absoluto
+    if (isSubmittingRef.current) return;
 
     if (!title) {
       toast.error('Por favor ingresa un título de anuncio');
       return;
     }
 
+    isSubmittingRef.current = true;
     setIsSubmitting(true);
 
     const formData = new FormData();
@@ -131,6 +133,7 @@ const AnnouncementManager = () => {
       console.error('Error saving announcement:', error);
       toast.error(error.response?.data?.message || 'Error al guardar el anuncio');
     } finally {
+      isSubmittingRef.current = false;
       setIsSubmitting(false);
     }
   };
