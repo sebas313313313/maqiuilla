@@ -67,7 +67,7 @@ app.use('/api/announcements', require('./routes/announcementRoutes'));
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '..', 'client', 'dist')));
 
-  app.get('*', (req, res) => {
+  app.get('(.*)', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'client', 'dist', 'index.html'));
   });
 }
@@ -91,11 +91,14 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: 'Error interno del servidor' });
 });
 
-const PORT = process.env.PORT || 5000;
+// En local arrancamos el servidor, en Vercel exportamos la app
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`\n🌺 Lirio Store Server corriendo en puerto ${PORT}`);
+    console.log(`📦 API: http://localhost:${PORT}/api`);
+    console.log(`🌐 Frontend: http://localhost:5173`);
+  });
+}
 
-app.listen(PORT, () => {
-  console.log(`\n🌺 Lirio Store Server corriendo en puerto ${PORT}`);
-  console.log(`📦 API: http://localhost:${PORT}/api`);
-  console.log(`🌐 Frontend: http://localhost:5173`);
-  console.log(`🛡️  Seguridad: Helmet + CORS configurados\n`);
-});
+module.exports = app;
