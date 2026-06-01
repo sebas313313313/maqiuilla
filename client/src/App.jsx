@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider, AuthContext } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
+import { FavoritesProvider } from './context/FavoritesContext';
 import { Toaster } from 'react-hot-toast';
 
 // Componentes
@@ -12,6 +13,7 @@ import AdminSidebar from './components/AdminSidebar';
 import Home from './pages/Home';
 import Shop from './pages/Shop';
 import Cart from './pages/Cart';
+import Favorites from './pages/Favorites';
 
 // Páginas de Administrador
 import Login from './pages/admin/Login';
@@ -77,6 +79,7 @@ const MainLayout = () => {
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/favorites" element={<Favorites />} />
           <Route path="/admin/login" element={<Login />} />
           {/* Fallback */}
           <Route path="*" element={<Navigate to="/" replace />} />
@@ -90,29 +93,31 @@ const MainLayout = () => {
 function App() {
   return (
     <AuthProvider>
-      <CartProvider>
-        <Router>
-          <ScrollToTop />
-          {/* Alertas Premium de react-hot-toast */}
-          <Toaster
-            position="top-right"
-            toastOptions={{
-              duration: 3500,
-              style: {
-                borderRadius: '20px',
-                background: '#FDF6FA',
-                color: '#1A1A2E',
-                border: '1px solid #F3E8F0',
-                fontSize: '14px',
-                fontWeight: '500',
-                padding: '16px 24px',
-                boxShadow: '0 8px 30px rgba(0,0,0,0.04)',
-              },
-            }}
-          />
-          <MainLayout />
-        </Router>
-      </CartProvider>
+      <FavoritesProvider>
+        <CartProvider>
+          <Router>
+            <ScrollToTop />
+            {/* Alertas Premium de react-hot-toast */}
+            <Toaster
+              position="top-right"
+              toastOptions={{
+                duration: 3500,
+                style: {
+                  borderRadius: '20px',
+                  background: '#FDF6FA',
+                  color: '#1A1A2E',
+                  border: '1px solid #F3E8F0',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  padding: '16px 24px',
+                  boxShadow: '0 8px 30px rgba(0,0,0,0.04)',
+                },
+              }}
+            />
+            <MainLayout />
+          </Router>
+        </CartProvider>
+      </FavoritesProvider>
     </AuthProvider>
   );
 }

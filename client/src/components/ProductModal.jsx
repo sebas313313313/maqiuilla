@@ -1,11 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { ShoppingCart, Minus, Plus, Star, X, Flower2 } from 'lucide-react';
+import { ShoppingCart, Minus, Plus, Star, X, Flower2, Heart, Flame } from 'lucide-react';
 import { CartContext } from '../context/CartContext';
+import { FavoritesContext } from '../context/FavoritesContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
 
 const ProductModal = ({ product, onClose }) => {
   const { addToCart, cartItems } = useContext(CartContext);
+  const { toggleFavorite, isFavorite } = useContext(FavoritesContext);
   const [quantity, setQuantity] = useState(1);
 
   // Prevent background scrolling when modal is open
@@ -93,7 +95,7 @@ const ProductModal = ({ product, onClose }) => {
               <div className="flex items-center justify-center relative bg-gray-50 rounded-[2.5rem] overflow-hidden aspect-square border border-gray-100">
                 {product.featured && (
                   <span className="absolute top-6 left-6 z-10 bg-primary text-white text-xs font-bold px-4 py-2 rounded-full shadow-sm flex items-center gap-1.5">
-                    Favorito <Star className="w-4 h-4" />
+                    Tendencia <Flame className="w-4 h-4 text-yellow-300 fill-yellow-300" />
                   </span>
                 )}
                 {isOutOfStock && (
@@ -101,6 +103,21 @@ const ProductModal = ({ product, onClose }) => {
                     Agotado
                   </span>
                 )}
+
+                {/* Favorite Button */}
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleFavorite(product);
+                  }}
+                  title={isFavorite(product._id) ? "Agregado a favoritos" : "Agregar a favoritos"}
+                  className="absolute top-6 right-6 z-10 p-3 bg-white/80 backdrop-blur-md hover:bg-white text-gray-500 hover:text-red-500 rounded-full transition-all duration-300 shadow-sm group/heart"
+                >
+                  <Heart 
+                    className={`w-6 h-6 transition-colors duration-300 ${isFavorite(product._id) ? 'text-red-500 fill-red-500' : 'group-hover/heart:text-red-500 group-hover/heart:fill-red-100'}`} 
+                  />
+                </button>
 
                 {product.image ? (
                   <img

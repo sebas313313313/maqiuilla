@@ -7,9 +7,14 @@ const path = require('path');
 // @access  Public
 const getProducts = async (req, res) => {
   try {
-    const { category, search, sort, featured, page = 1, limit = 12 } = req.query;
+    const { category, search, sort, featured, page = 1, limit = 12, ids } = req.query;
     
     let query = { active: true };
+
+    if (ids) {
+      const idsArray = ids.split(',');
+      query._id = { $in: idsArray };
+    }
 
     if (category) {
       query.category = category;

@@ -1,11 +1,13 @@
 import React, { useContext, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingBag, Menu, X, User, Home, LogOut, Flower2 } from 'lucide-react';
+import { ShoppingBag, Menu, X, User, Home, LogOut, Heart, Flower2 } from 'lucide-react';
 import { CartContext } from '../context/CartContext';
 import { AuthContext } from '../context/AuthContext';
+import { FavoritesContext } from '../context/FavoritesContext';
 
 const Navbar = () => {
   const { getCartCount } = useContext(CartContext);
+  const { getFavoritesCount } = useContext(FavoritesContext);
   const { isAuthenticated, logout, admin } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
@@ -59,6 +61,16 @@ const Navbar = () => {
             <Link to="/" className={isActive('/')}>Inicio</Link>
             <Link to="/shop" className={isActive('/shop')}>Tienda</Link>
 
+            {/* Favorites Icon */}
+            <Link to="/favorites" className="relative p-2.5 bg-primary/5 hover:bg-primary/10 rounded-full transition-all duration-300 group">
+              <Heart className="w-5 h-5 text-dark group-hover:text-primary transition-colors duration-300" />
+              {getFavoritesCount() > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full border border-[#FDF6FA]">
+                  {getFavoritesCount()}
+                </span>
+              )}
+            </Link>
+
             {/* Cart Icon */}
             <Link to="/cart" className="relative p-2.5 bg-primary/5 hover:bg-primary/10 rounded-full transition-all duration-300 group">
               <ShoppingBag className="w-5 h-5 text-dark group-hover:text-primary transition-colors duration-300" />
@@ -79,6 +91,16 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center gap-4">
+            {/* Favorites Icon (mobile) */}
+            <Link to="/favorites" className="relative p-2.5 bg-primary/5 rounded-full">
+              <Heart className="w-5 h-5 text-dark" />
+              {getFavoritesCount() > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full border border-[#FDF6FA]">
+                  {getFavoritesCount()}
+                </span>
+              )}
+            </Link>
+
             {/* Cart Icon (always visible) */}
             <Link to="/cart" className="relative p-2.5 bg-primary/5 rounded-full">
               <ShoppingBag className="w-5 h-5 text-dark" />
@@ -115,6 +137,13 @@ const Navbar = () => {
             className="flex items-center gap-3 text-lg font-medium text-dark border-b border-[#F3E8F0]/30 pb-2"
           >
             <ShoppingBag className="w-5 h-5 text-primary" /> Tienda
+          </Link>
+          <Link
+            to="/favorites"
+            onClick={() => setIsOpen(false)}
+            className="flex items-center gap-3 text-lg font-medium text-dark border-b border-[#F3E8F0]/30 pb-2"
+          >
+            <Heart className="w-5 h-5 text-primary" /> Favoritos ({getFavoritesCount()})
           </Link>
           <Link
             to="/cart"

@@ -1,12 +1,14 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ShoppingCart, Plus, Minus } from 'lucide-react';
+import { ShoppingCart, Plus, Minus, Heart, Flame } from 'lucide-react';
 import { CartContext } from '../context/CartContext';
+import { FavoritesContext } from '../context/FavoritesContext';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 
 const ProductCard = ({ product, onViewProduct }) => {
   const { addToCart, cartItems } = useContext(CartContext);
+  const { toggleFavorite, isFavorite } = useContext(FavoritesContext);
   const [quantity, setQuantity] = useState(1);
 
   const cartItem = cartItems.find(item => item.product === product._id);
@@ -65,10 +67,25 @@ const ProductCard = ({ product, onViewProduct }) => {
         )}
         {/* Featured Badge */}
         {product.featured && !isOutOfStock && (
-          <span className="absolute top-4 left-4 z-10 bg-primary text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
-            Favorito ✨
+          <span className="absolute top-4 left-4 z-10 bg-primary text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm flex items-center gap-1">
+            Tendencia <Flame className="w-3 h-3 text-yellow-300 fill-yellow-300" />
           </span>
         )}
+
+        {/* Favorite Button */}
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleFavorite(product);
+          }}
+          title={isFavorite(product._id) ? "Agregado a favoritos" : "Agregar a favoritos"}
+          className="absolute top-4 right-4 z-10 p-2.5 bg-white/80 backdrop-blur-md hover:bg-white text-gray-500 hover:text-red-500 rounded-full transition-all duration-300 shadow-sm group/heart"
+        >
+          <Heart 
+            className={`w-5 h-5 transition-colors duration-300 ${isFavorite(product._id) ? 'text-red-500 fill-red-500' : 'group-hover/heart:text-red-500 group-hover/heart:fill-red-100'}`} 
+          />
+        </button>
 
         {/* Product Image */}
         {product.image ? (
