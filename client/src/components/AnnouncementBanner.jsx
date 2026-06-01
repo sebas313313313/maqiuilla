@@ -67,19 +67,26 @@ const AnnouncementBanner = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.4 }}
-              className="flex flex-col md:flex-row items-center gap-2"
+              className="flex flex-col md:flex-row items-center gap-2 md:gap-4"
             >
-              <div className="flex items-center gap-1.5 bg-primary/20 text-primary-dark px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider">
-                <Sparkles className="w-3 h-3 animate-spin" /> Anuncio
-              </div>
-              <span className="font-semibold text-dark text-sm md:text-base">
-                {current.title}
-              </span>
-              {current.description && (
-                <span className="text-gray-600 text-xs md:text-sm border-t md:border-t-0 md:border-l border-primary/30 pt-1 md:pt-0 md:pl-3">
-                  {current.description}
-                </span>
+              {current.image && (
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-primary/50 overflow-hidden shadow-sm shrink-0">
+                  <img src={current.image} alt="Anuncio" className="w-full h-full object-cover" />
+                </div>
               )}
+              <div className="flex flex-col md:flex-row items-center gap-2">
+                <div className="flex items-center gap-1.5 bg-primary/20 text-primary-dark px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider">
+                  <Sparkles className="w-3 h-3 animate-spin" /> Anuncio
+                </div>
+                <span className="font-semibold text-dark text-sm md:text-base">
+                  {current.title}
+                </span>
+                {current.description && (
+                  <span className="text-gray-600 text-xs md:text-sm border-t md:border-t-0 md:border-l border-primary/30 pt-1 md:pt-0 md:pl-3">
+                    {current.description}
+                  </span>
+                )}
+              </div>
             </motion.div>
           </AnimatePresence>
         </div>

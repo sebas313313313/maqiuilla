@@ -46,7 +46,7 @@ const createAnnouncement = async (req, res) => {
       description: description || '',
       active: active !== undefined ? (active === 'true' || active === true) : true,
       expiresAt: expiresAt || null,
-      image: req.file ? `/uploads/${req.file.filename}` : '',
+      image: req.file ? req.file.path : '',
     });
 
     res.status(201).json(announcement);
@@ -74,13 +74,13 @@ const updateAnnouncement = async (req, res) => {
     announcement.expiresAt = expiresAt !== undefined ? expiresAt : announcement.expiresAt;
 
     if (req.file) {
-      if (announcement.image) {
+      if (announcement.image && announcement.image.startsWith('/uploads')) {
         const oldPath = path.join(__dirname, '..', announcement.image);
         if (fs.existsSync(oldPath)) {
           fs.unlinkSync(oldPath);
         }
       }
-      announcement.image = `/uploads/${req.file.filename}`;
+      announcement.image = req.file.path;
     }
 
     const updated = await announcement.save();
