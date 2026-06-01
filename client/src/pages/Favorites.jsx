@@ -22,7 +22,7 @@ const Favorites = () => {
 
       setLoading(true);
       try {
-        const response = await axios.get(`http://localhost:5000/api/products?ids=${favorites.join(',')}`);
+        const response = await axios.get(`/api/products?limit=100&ids=${favorites.join(',')}`);
         // As the response has { products, page, pages, total }
         // Let's filter locally just in case to match the exact favorites (though the query does it)
         const fetchedProducts = response.data.products || [];
