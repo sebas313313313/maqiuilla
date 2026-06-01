@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Flower2, Phone, MapPin, Clock } from 'lucide-react';
+import { Flower2, Phone, MapPin, Clock, Github } from 'lucide-react';
 import { RiInstagramLine, RiFacebookCircleLine } from 'react-icons/ri';
 
 const Footer = () => {
@@ -96,12 +96,13 @@ const Footer = () => {
 
         <div className="border-t border-[#F3E8F0] pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-500">
           <p>© {new Date().getFullYear()} Lirio Store. Todos los derechos reservados.</p>
-          <p className="flex items-center gap-1">
-            Hecho con amor <Flower2 className="w-3 h-3" /> por 
-            <a href="https://github.com/devseb" target="_blank" rel="noopener noreferrer" className="hover:text-primary underline transition-colors">
-              devseb
+          <div className="flex items-center gap-2">
+            <span>Desarrollado por</span>
+            <a href="https://github.com/sebas313313313" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:text-primary transition-colors font-medium">
+              <Github className="w-4 h-4" />
+              sebas313313313
             </a>
-          </p>
+          </div>
         </div>
       </div>
     </footer>
