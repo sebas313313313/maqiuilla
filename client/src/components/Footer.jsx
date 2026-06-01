@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Flower2, Phone, MapPin, Clock, Github } from 'lucide-react';
-import { RiInstagramLine, RiFacebookCircleLine } from 'react-icons/ri';
+import { Flower2, Phone, MapPin, Clock } from 'lucide-react';
+import { RiInstagramLine, RiFacebookCircleLine, RiGithubFill } from 'react-icons/ri';
 
 const Footer = () => {
   return (
@@ -99,7 +99,7 @@ const Footer = () => {
           <div className="flex items-center gap-2">
             <span>Desarrollado por</span>
             <a href="https://github.com/sebas313313313" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:text-primary transition-colors font-medium">
-              <Github className="w-4 h-4" />
+              <RiGithubFill className="w-4 h-4" />
               sebas313313313
             </a>
           </div>
