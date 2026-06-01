@@ -1,0 +1,38 @@
+{
+  "name": "lirio-store",
+  "version": "1.0.0",
+  "description": "Lirio Store - Boutique de Belleza Premium Online",
+  "main": "server/server.js",
+  "scripts": {
+    "server": "node server/server.js",
+    "server:dev": "nodemon server/server.js",
+    "client": "cd client && npm run dev",
+    "dev": "concurrently \"npm run server:dev\" \"npm run client\"",
+    "build": "cd client && npm run build",
+    "seed": "node server/seed.js",
+    "start": "node server/server.js"
+  },
+  "keywords": [
+    "maquillaje",
+    "ecommerce",
+    "lirio",
+    "belleza",
+    "popayan"
+  ],
+  "author": "Lirio Store",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cloudinary": "^1.41.3",
+    "concurrently": "^9.2.1",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.6.2",
+    "multer": "^2.1.1",
+    "multer-storage-cloudinary": "^4.0.0",
+    "nodemon": "^3.1.14"
+  }
+}
