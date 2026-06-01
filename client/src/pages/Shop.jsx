@@ -55,6 +55,7 @@ const Shop = () => {
         console.error('Error cargando productos:', error);
       } finally {
         setLoading(false);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     };
 

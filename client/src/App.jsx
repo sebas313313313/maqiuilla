@@ -20,6 +20,15 @@ import ProductManager from './pages/admin/ProductManager';
 import OrderManager from './pages/admin/OrderManager';
 import AnnouncementManager from './pages/admin/AnnouncementManager';
 
+// Componente para hacer scroll hacia arriba en cada navegación
+const ScrollToTop = () => {
+  const { pathname, search } = useLocation();
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname, search]);
+  return null;
+};
+
 // Middleware / Componente de Ruta Protegida
 const PrivateRoute = ({ children }) => {
   const { isAuthenticated, loading } = useContext(AuthContext);
@@ -83,6 +92,7 @@ function App() {
     <AuthProvider>
       <CartProvider>
         <Router>
+          <ScrollToTop />
           {/* Alertas Premium de react-hot-toast */}
           <Toaster
             position="top-right"
