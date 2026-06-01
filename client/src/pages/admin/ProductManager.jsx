@@ -8,6 +8,7 @@ const ProductManager = () => {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Form Fields
   const [name, setName] = useState('');
@@ -96,6 +97,8 @@ const ProductManager = () => {
       return;
     }
 
+    setIsSubmitting(true);
+
     const formData = new FormData();
     formData.append('name', name);
     formData.append('description', description);
@@ -126,6 +129,8 @@ const ProductManager = () => {
     } catch (error) {
       console.error('Error saving product:', error);
       toast.error(error.response?.data?.message || 'Error al guardar producto');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -398,9 +403,19 @@ const ProductManager = () => {
                 </button>
                 <button
                   type="submit"
-                  className="bg-primary hover:bg-primary-dark text-white font-bold px-8 py-3.5 rounded-2xl text-sm transition-all duration-300 shadow-md shadow-primary/20"
+                  disabled={isSubmitting}
+                  className="bg-primary hover:bg-primary-dark text-white font-bold px-8 py-3.5 rounded-2xl text-sm transition-all duration-300 shadow-md shadow-primary/20 flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  {editingProduct ? 'Guardar Cambios' : 'Crear Producto'}
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      Guardando...
+                    </>
+                  ) : editingProduct ? (
+                    'Guardar Cambios'
+                  ) : (
+                    'Crear Producto'
+                  )}
                 </button>
               </div>
 

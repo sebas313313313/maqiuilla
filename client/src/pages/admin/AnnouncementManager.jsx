@@ -8,6 +8,7 @@ const AnnouncementManager = () => {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingAnnouncement, setEditingAnnouncement] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Form Fields
   const [title, setTitle] = useState('');
@@ -96,6 +97,8 @@ const AnnouncementManager = () => {
       return;
     }
 
+    setIsSubmitting(true);
+
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
@@ -125,6 +128,8 @@ const AnnouncementManager = () => {
     } catch (error) {
       console.error('Error saving announcement:', error);
       toast.error(error.response?.data?.message || 'Error al guardar el anuncio');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -352,9 +357,19 @@ const AnnouncementManager = () => {
                 </button>
                 <button
                   type="submit"
-                  className="bg-primary hover:bg-primary-dark text-white font-bold px-8 py-3.5 rounded-2xl text-sm transition-all duration-300 shadow-md shadow-primary/20"
+                  disabled={isSubmitting}
+                  className="bg-primary hover:bg-primary-dark text-white font-bold px-8 py-3.5 rounded-2xl text-sm transition-all duration-300 shadow-md shadow-primary/20 flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  {editingAnnouncement ? 'Guardar Cambios' : 'Publicar Anuncio'}
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      Guardando...
+                    </>
+                  ) : editingAnnouncement ? (
+                    'Guardar Cambios'
+                  ) : (
+                    'Publicar Anuncio'
+                  )}
                 </button>
               </div>
 
