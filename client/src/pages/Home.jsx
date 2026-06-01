@@ -5,10 +5,12 @@ import { motion } from 'framer-motion';
 import { ChevronRight, Star, Heart, Gift, Truck, Eye, Smile, Droplets, Sparkles, Palette, Flower2 } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
 import AnnouncementBanner from '../components/AnnouncementBanner';
+import ProductModal from '../components/ProductModal';
 
 const Home = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const categories = [
     { name: 'Labiales', color: 'from-[#F3E8F0] to-[#C4638A]/40', icon: <Palette className="w-7 h-7" /> },
@@ -212,7 +214,7 @@ const Home = () => {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full">
               {featuredProducts.slice(0, 4).map((product) => (
-                <ProductCard key={product._id} product={product} />
+                <ProductCard key={product._id} product={product} onViewProduct={setSelectedProduct} />
               ))}
             </div>
           )}
@@ -225,6 +227,11 @@ const Home = () => {
           </Link>
         </div>
       </section>
+
+      {/* Product Modal */}
+      {selectedProduct && (
+        <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />
+      )}
     </div>
   );
 };

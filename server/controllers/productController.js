@@ -68,11 +68,12 @@ const getProductById = async (req, res) => {
 // @access  Private/Admin
 const createProduct = async (req, res) => {
   try {
-    const { name, description, price, category, stock, featured } = req.body;
+    const { name, description, features, price, category, stock, featured } = req.body;
 
     const product = await Product.create({
       name,
       description,
+      features: features || '',
       price,
       category,
       stock: stock || 0,
@@ -97,10 +98,11 @@ const updateProduct = async (req, res) => {
       return res.status(404).json({ message: 'Producto no encontrado' });
     }
 
-    const { name, description, price, category, stock, featured, active } = req.body;
+    const { name, description, features, price, category, stock, featured, active } = req.body;
 
     product.name = name || product.name;
     product.description = description || product.description;
+    product.features = features !== undefined ? features : product.features;
     product.price = price !== undefined ? price : product.price;
     product.category = category || product.category;
     product.stock = stock !== undefined ? stock : product.stock;

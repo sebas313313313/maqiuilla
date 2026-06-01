@@ -9,11 +9,9 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import AdminSidebar from './components/AdminSidebar';
 
-// Páginas de Comprador
 import Home from './pages/Home';
 import Shop from './pages/Shop';
 import Cart from './pages/Cart';
-import ProductDetail from './pages/ProductDetail';
 
 // Páginas de Administrador
 import Login from './pages/admin/Login';
@@ -70,7 +68,6 @@ const MainLayout = () => {
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/admin/login" element={<Login />} />
           {/* Fallback */}
           <Route path="*" element={<Navigate to="/" replace />} />

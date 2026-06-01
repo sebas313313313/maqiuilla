@@ -14,6 +14,7 @@ const ProductManager = () => {
   // Form Fields
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [features, setFeatures] = useState('');
   const [price, setPrice] = useState('');
   const [category, setCategory] = useState('Labiales');
   const [stock, setStock] = useState('0');
@@ -45,6 +46,7 @@ const ProductManager = () => {
     setEditingProduct(null);
     setName('');
     setDescription('');
+    setFeatures('');
     setPrice('');
     setCategory('Labiales');
     setStock('10');
@@ -59,6 +61,7 @@ const ProductManager = () => {
     setEditingProduct(product);
     setName(product.name);
     setDescription(product.description);
+    setFeatures(product.features || '');
     setPrice(product.price.toString());
     setCategory(product.category);
     setStock(product.stock.toString());
@@ -106,6 +109,7 @@ const ProductManager = () => {
     const formData = new FormData();
     formData.append('name', name);
     formData.append('description', description);
+    formData.append('features', features);
     formData.append('price', price);
     formData.append('category', category);
     formData.append('stock', stock);
@@ -294,6 +298,18 @@ const ProductManager = () => {
                   rows="3"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
+                  className="w-full px-4 py-3 bg-[#FDF6FA] border border-[#F3E8F0]/60 rounded-2xl text-sm focus:outline-none focus:border-primary text-dark resize-none"
+                />
+              </div>
+
+              {/* Features */}
+              <div className="flex flex-col gap-1.5">
+                <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Detalles Lirio (Opcional)</label>
+                <textarea
+                  placeholder="Ej. Formulación hipoalergénica.&#10;Libre de crueldad animal.&#10;Separar cada detalle con una nueva línea."
+                  rows="3"
+                  value={features}
+                  onChange={(e) => setFeatures(e.target.value)}
                   className="w-full px-4 py-3 bg-[#FDF6FA] border border-[#F3E8F0]/60 rounded-2xl text-sm focus:outline-none focus:border-primary text-dark resize-none"
                 />
               </div>

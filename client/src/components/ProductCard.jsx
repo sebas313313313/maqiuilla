@@ -5,7 +5,7 @@ import { CartContext } from '../context/CartContext';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, onViewProduct }) => {
   const { addToCart, cartItems } = useContext(CartContext);
   const [quantity, setQuantity] = useState(1);
 
@@ -56,7 +56,7 @@ const ProductCard = ({ product }) => {
       transition={{ duration: 0.3, ease: 'easeOut' }}
       className="bg-white rounded-3xl overflow-hidden border border-[#F3E8F0]/40 shadow-sm hover:shadow-md flex flex-col h-full group"
     >
-      <Link to={`/product/${product._id}`} className="block relative aspect-square overflow-hidden bg-gray-50 shrink-0">
+      <div onClick={() => onViewProduct && onViewProduct(product)} className="block relative aspect-square overflow-hidden bg-gray-50 shrink-0 cursor-pointer">
         {/* Out of Stock Badge */}
         {isOutOfStock && (
           <span className="absolute top-4 left-4 z-10 bg-gray-600/90 text-white text-xs font-semibold px-3 py-1.5 rounded-full backdrop-blur-sm">
@@ -91,18 +91,18 @@ const ProductCard = ({ product }) => {
             <span className="font-serif text-primary text-4xl font-light italic">LS</span>
           </div>
         )}
-      </Link>
+      </div>
 
       {/* Info */}
       <div className="p-6 flex flex-col flex-grow">
         <span className="text-xs font-medium text-primary-dark uppercase tracking-widest mb-1.5">
           {product.category}
         </span>
-        <Link to={`/product/${product._id}`} className="hover:text-primary transition-colors duration-300">
+        <button onClick={() => onViewProduct && onViewProduct(product)} className="hover:text-primary transition-colors duration-300 text-left">
           <h3 className="font-serif text-lg font-bold text-dark mb-2 line-clamp-1 leading-snug">
             {product.name}
           </h3>
-        </Link>
+        </button>
         <p className="text-gray-500 text-xs leading-relaxed line-clamp-2 mb-4">
           {product.description}
         </p>
